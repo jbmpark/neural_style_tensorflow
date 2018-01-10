@@ -28,3 +28,18 @@ style_3 input
 style_3-bridge
 
 ![입력](./bridge_002000.png) 
+
+
+
+With multple contents layer losse and total variation loss, it shows very good results!
+
+catsle input
+
+![입력](./style_3.jpeg)
+
+catsle-gogh ( conv4_2 * 0.8 , conv2_2 * 0.2 ,  + TV loss )
+
+![입력](./bridge_002000.png) 
+
+
+
