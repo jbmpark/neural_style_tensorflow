@@ -35,11 +35,11 @@ With multple contents layer losse and total variation loss, it shows very good r
 
 catsle input
 
-![입력](./style_3.jpeg)
+![입력](./catsle_input.png)
 
 catsle-gogh ( conv4_2 * 0.8 , conv2_2 * 0.2 ,  + TV loss )
 
-![입력](./bridge_002000.png) 
+![입력](./catsle_gogh.png) 
 
 
 
