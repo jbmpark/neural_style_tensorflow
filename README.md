@@ -37,7 +37,7 @@ catsle input
 
 ![입력](./catsle_input.png)
 
-catsle-gogh ( conv4_2 * 0.8 , conv2_2 * 0.2 ,  + TV loss )
+catsle-gogh 2000 steps ( conv4_2 * 0.8 , conv2_2 * 0.2 ,  + TV loss )
 
 ![입력](./catsle_gogh.png) 
 
