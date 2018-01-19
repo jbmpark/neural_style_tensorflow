@@ -15,20 +15,21 @@ import vgg
 ###
 # parameters
 GPU='0'
-max_tries = 100000    
+max_tries = 10000    
 pooling = 'avg'
 feature_size_normalization=False
 image_resize = True
 tv_loss = True  # total variation loss  from 'image invert'
 base_lr = 1.0
-contents_loss_ratio = 0.001
+contents_loss_ratio = 0.0001
     
 FLAGS = tf.flags.FLAGS
 tf.flags.DEFINE_string("contents_image", "./catsle.jpg", """Image file path""")
 tf.flags.DEFINE_string("style_image", "./style_gogh.jpg", """Image file path""")
 tf.flags.DEFINE_string("vgg19", "./imagenet-vgg-verydeep-19.mat", """Pre-trained VGG19 file path""")
 #tf.flags.DEFINE_string("invert_layer", "conv5_1", """Layer to invert from.""")
-style_layer=["conv1_1","conv2_1","conv3_1","conv4_1","conv5_1"]
+#style_layer=["relu1_2","relu2_2", "relu3_4","relu4_4","relu5_4"] 
+style_layer=["conv1_1","conv2_1","conv3_1","conv4_1", "conv5_1"] 
 contents_layer=["conv2_2", "conv4_2"]
 contents_layer_weight=[0.2, 0.8]
 #contents_layer=["conv4_2"]
@@ -173,7 +174,13 @@ def main(_):
 
 
         if tv_loss:
-            total_variation_loss = (tf.image.total_variation(c_img+X)[0] + tf.image.total_variation(s_img+X)[0])/2
+            # if image_resize:
+            #     total_variation_loss = (tf.image.total_variation(c_img+X)[0] + tf.image.total_variation(s_img+X)[0])/2
+            # else:
+            #     total_variation_loss = tf.image.total_variation(c_img+X)[0]
+            tv_loss_contents = tf.abs(tf.reduce_mean(tf.image.total_variation(tf.convert_to_tensor(c_img)))-tf.reduce_mean(tf.image.total_variation(tf.convert_to_tensor(X))))
+            tv_loss_style = tf.abs(tf.reduce_mean(tf.image.total_variation(tf.convert_to_tensor(s_img)))-tf.reduce_mean(tf.image.total_variation(tf.convert_to_tensor(X))))
+            total_variation_loss = tv_loss_style
         else:
             total_variation_loss = 0
         loss = contents_loss_ratio*contents_loss + (1-contents_loss_ratio)*style_loss + total_variation_loss
@@ -203,7 +210,6 @@ def main(_):
 
 if __name__ == "__main__":
     tf.app.run()
-
 
 
 
